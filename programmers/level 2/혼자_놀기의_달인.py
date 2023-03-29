@@ -1,4 +1,5 @@
 #230327
+# 힙, 정렬
 # heap + visited + if-else
 def solution(cards):
     from heapq import heappush, heappop

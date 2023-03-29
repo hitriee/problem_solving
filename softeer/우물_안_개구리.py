@@ -1,5 +1,6 @@
 #230329
-#
+# linked list
+
 # 입력값을 정수형으로 변경
 to_int = lambda : map(int, input().split())
 # 입력
