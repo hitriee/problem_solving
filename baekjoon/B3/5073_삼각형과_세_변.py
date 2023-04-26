@@ -44,3 +44,46 @@ while True:
         print('Isosceles')
     else:
         print('Scalene')
+
+# 반복문 이용
+while True:
+    lines = sorted(map(int, input().split()))
+    if lines[0] == 0:
+        break
+    elif sum(lines[:2]) <= lines[-1]:
+        print('Invalid')
+    else:
+        lines.append(lines[0])
+        cnt = 0
+        for i in range(3):
+            if lines[i] == lines[i+1]:
+                cnt += 1
+        if cnt == 3:
+            print('Equilateral')
+        elif cnt == 1:
+            print('Isosceles')
+        else:
+            print('Scalene')
+
+
+# 반복문 이용2
+while True:
+    lines = sorted(map(int, input().split()))
+    if lines[0] == 0:
+        break
+    elif sum(lines[:2]) <= lines[-1]:
+        print('Invalid')
+    else:
+        cnt = 0
+        for i in range(2):
+            if lines[i] == lines[i+1]:
+                cnt += 1
+        if cnt == 2:
+            print('Equilateral')
+        else:
+            if lines[0] == lines[-1]:
+                cnt += 1
+            if cnt == 1:
+                print('Isosceles')
+            else:
+                print('Scalene')
