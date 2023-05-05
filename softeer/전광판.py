@@ -209,3 +209,80 @@ bulb_per_num = {str(i): set(range(1, 8)) for i in range(10)}
 exclude_index = [(), (1, 4), (5, 6), (0, 1, 7), (1, 2, 3), (2,), (1, 4, 7), (1, 3, 4, 5, 7, 9)]
 fill_dict()
 calc_cnt()
+
+
+
+#
+def fill_dict():
+    for i in range(1, 8):
+        for j in exclude_index[i]:
+            bulb_per_num[str(j)] -= {i}
+
+def to_five(num): return num.rjust(5, '0')
+
+def calc_cnt():
+    for _ in range(T):
+        cnt = 0
+        A, B = new_input().split()
+        if len(A) <= len(B):
+            limit, max_val = len(A), len(B)
+        else:
+            limit, max_val = len(B), len(A)
+
+        A, B = to_five(A), to_five(B)
+
+        for i in range(4, 4-limit, -1):
+            cnt += len(bulb_per_num[A[i]].symmetric_difference(bulb_per_num[B[i]]))
+
+        for i in range(4-limit, 4-max_val, -1):
+            cnt += len(bulb_per_num[A[i]]) if A[i] != '0' else len(bulb_per_num[B[i]])
+
+        print(cnt)
+
+from sys import stdin
+new_input = stdin.readline
+T = int(new_input())
+# 각 숫자별 켜지는 전구
+bulb_per_num = {str(i): set(range(1, 8)) for i in range(10)}
+# 각 위치별 켜지지 않는 숫자
+exclude_index = [(), (1, 4), (5, 6), (0, 1, 7), (1, 2, 3), (2,), (1, 4, 7), (1, 3, 4, 5, 7, 9)]
+fill_dict()
+calc_cnt()
+
+
+#
+def fill_dict():
+    for i in range(7):
+        for j in exclude_index[i]:
+            bulb_per_num[str(j)] -= {i}
+
+def to_five(num): return num.rjust(5, '0')
+
+def calc_cnt():
+    for _ in range(T):
+        cnt = 0
+        A, B = new_input().split()
+        if len(A) <= len(B):
+            limit, max_val = len(A), len(B)
+        else:
+            limit, max_val = len(B), len(A)
+
+        A, B = to_five(A), to_five(B)
+
+        for i in range(4, 4-limit, -1):
+            cnt += len(bulb_per_num[A[i]].symmetric_difference(bulb_per_num[B[i]]))
+
+        for i in range(4-limit, 4-max_val, -1):
+            cnt += len(bulb_per_num[A[i]]) if A[i] != '0' else len(bulb_per_num[B[i]])
+
+        print(cnt)
+
+from sys import stdin
+new_input = stdin.readline
+T = int(new_input())
+# 각 숫자별 켜지는 전구
+bulb_per_num = {str(i): set(range(7)) for i in range(10)}
+# 각 위치별 켜지지 않는 숫자
+exclude_index = [(1, 4), (5, 6), (0, 1, 7), (1, 2, 3), (2,), (1, 4, 7), (1, 3, 4, 5, 7, 9)]
+fill_dict()
+calc_cnt()
