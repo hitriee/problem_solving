@@ -84,12 +84,11 @@ before = statue_list[0]
 for i in range(1, N):
     if statue_list[i] == before:
         cnt += 1
-            # if cnt > 0 else -1
+
     else:
         straight_list.append(cnt)
         before = statue_list[i]
         cnt = 1
-            # if cnt > 0 else -1
 
 straight_list.append(cnt)
 
@@ -210,88 +209,70 @@ print(return_max())
 1 2 1 1 2 2 2 1 1 2
 '''
 
-# 최적화 시도 중
-# N = int(input())
-# statue_list = input().split()
-# straight_list = []
-# cnt = 1
-# before = statue_list[0]
-# for i in range(1, N):
-#     if statue_list[i] == before:
-#         cnt += 1
+#230522
+def return_max():
+    def find_max():
+        for direction in ('1', '2'):
+            now = 0
+            max_list.append([])
+            for i in range(N): # 인덱스 범위
+                now += 1 if statue_list[i] == direction else -1
+                if now < 0:
+                    now = 0
+                max_list[-1].append(now)
+
+        return max(*max_list[0], *max_list[-1])
+
+    N = int(input())
+    statue_list = input().split()
+    max_list = []
+    return find_max()
+
+print(return_max())
+
+
 #
-#     else:
-#         straight_list.append(cnt)
-#         before = statue_list[i]
-#         cnt += 1
+def return_max():
+    def find_max():
+        max_list = [[] for _ in range(2)]
+        now_list = [0] * 2
+        for direction in statue_list:
+            index = 0 if direction == '1' else 1
+            now_list[index] += 1
+            now_list[1-index] -= 1
+            for i in range(2):
+                if now_list[i] < 0:
+                    now_list[i] = 0
+                max_list[i].append(now_list[i])
+        return max(*max_list[0], *max_list[-1])
+
+    N = int(input())
+    statue_list = input().split()
+    return find_max()
+
+print(return_max())
+
+
 #
-# straight_list.append(cnt)
-# length = len(straight_list)
-#
-# if length > 1:
-#     acc = [straight_list[0]]
-#     for i in range(1, length):
-#         if i%2:
-#             acc.append(acc[-1] - straight_list[i])
-#         else:
-#             acc.append(acc[-1] + straight_list[i])
-#
-#     max_val_set = [{max(*[straight_list[j] for j in range(i, length, 2)])} for i in range(2)]
-#
-#     max_val_list = [[] for i in range(2)]
-#     index_list = [[] for _ in range(2)]
-#
-#     for i in range(2):
-#         for j in range(i, length, 2):
-#             acc[j]
-#
-#
-#     while start < length:
-#         start = 1
-#         for i in range(start, length, 2):
-#             pass
-#         for i in range(start+1, length, 2):
-#             pass
-#         start += 2
-#
-#     for i in range(length):
-#         num = acc[i]
-#         if i%2 == 0:
-#             if num > max_val:
-#                 max_val = num
-#                 max_i = i
-#         elif num < min_val:
-#             min_val = num
-#             min_i = i
-#
-#
-#     total_set = set()
-#     for i in range(2, length, 2):
-#         before = acc[i-1]
-#         if i > max_i:
-#             temp_max = 0
-#             for j in range(i, length, 2):
-#                 num = acc[j]
-#                 if num > temp_max:
-#                     temp_max = num
-#                     max_i = i
-#         value = acc[max_i] - before
-#         if max_val < value:
-#             max_val = value
-#
-#     for i in range(1, length, 2):
-#         before = acc[i - 1]
-#         if i > min_i:
-#             temp_min = 0
-#             for j in range(i, length, 2):
-#                 num = acc[j]
-#                 if num < temp_min:
-#                     temp_min = num
-#                     min_i = i
-#         value = acc[min_i] - before
-#         if min_val > value:
-#             min_val = value
-#     print(max(max_val, -min_val))
-#     # print(max(total_set))
-# else:
-#     print(straight_list[0])
+def return_max():
+
+    N = int(input())
+    statue_list = input().split()
+    max_list = [0] * 2
+    now_list = [0] * 2
+
+    for direction in statue_list:
+        index = 0 if direction == '1' else 1
+        now_list[index] += 1
+        now_list[1 - index] -= 1
+
+        for i in range(2):
+            now = now_list[i]
+            if now < 0:
+                now_list[i] = 0
+            elif now > max_list[i]:
+                max_list[i] = now
+
+    return max(max_list[0], max_list[1])
+
+print(return_max())
