@@ -68,3 +68,78 @@ def find_min_len():
     return 2
 
 print(find_min_len())
+
+
+#
+def find_min_len():
+    N, S = map(int, input().split())
+    num_arr = list(map(int, input().split()))
+    if max(num_arr) >= S:
+        return 1
+
+    for i in range(1, N):
+        num_arr[i] += num_arr[i-1]
+
+    if num_arr[-1] < S:
+        return 0
+    elif num_arr[-1] == S:
+        return N
+
+    start, end = 0, N-1
+    while start <= end:
+        mid = (start + end) // 2
+        if num_arr[mid] >= S:
+            end = mid - 1
+        else:
+            start = mid + 1
+
+    before = 0
+    for i in range(end, 1, -1):
+        for j in range(i+before, N):
+            acc_num = num_arr[j] - num_arr[j-i]
+            if acc_num >= S:
+                before = j - i
+                break
+        else:
+            return i+1
+    return 2
+
+print(find_min_len())
+
+
+#
+def find_min_len():
+    N, S = map(int, input().split())
+    num_arr = [0]
+    num_arr.extend(map(int, input().split()))
+    if max(num_arr) >= S:
+        return 1
+
+    for i in range(2, N+1):
+        num_arr[i] += num_arr[i-1]
+
+    if num_arr[-1] < S:
+        return 0
+    elif num_arr[-1] == S:
+        return N
+
+    start, end = 1, N
+    before = 1
+    while start <= end:
+        mid = (start + end) // 2
+        if num_arr[mid] >= S:
+            end = mid - 1
+        else:
+            start = mid + 1
+
+    for i in range(end, 1, -1):
+        for j in range(i+before, N+1):
+            acc_num = num_arr[j] - num_arr[j-i]
+            if acc_num >= S:
+                before = j - i
+                break
+        else:
+            return i+1
+    return 2
+
+print(find_min_len())
