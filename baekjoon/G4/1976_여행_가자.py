@@ -266,3 +266,47 @@ def is_possible_plan():
 
 
 print(is_possible_plan())
+
+
+#
+def find_root(num, group_info):
+    if num == group_info[num]:
+        return num
+    result = find_root(group_info[num], group_info)
+    group_info[num] = result
+    return result
+
+def union_group(num1, num2, group_info, rank):
+    group1, group2 = find_root(num1, group_info), find_root(num2, group_info)
+    if group1 == group2:
+        return
+    if rank[group1] >= rank[group2]:
+        rank[group1] += rank[group2]
+        group_info[group2] = group1
+    else:
+        rank[group2] += rank[group1]
+        group_info[group1] = group2
+
+def is_possible_route():
+    from sys import stdin
+    new_input = stdin.readline
+    N = int(new_input())
+    M = int(new_input())
+    group_info = list(range(N+1))
+    rank = [1] * (N+1)
+    for i in range(N):
+        row = new_input().split()
+        for j in range(i+1, N):
+            if row[j] == '1':
+                union_group(i+1, j+1, group_info, rank)
+    route = list(map(int, new_input().split()))
+    ref = find_root(route[0], group_info)
+    for i in range(1, M):
+        root = find_root(route[i], group_info)
+        if root != ref:
+            return 'NO'
+
+    return 'YES'
+
+print(is_possible_route())
+
