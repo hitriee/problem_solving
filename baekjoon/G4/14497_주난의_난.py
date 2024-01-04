@@ -89,3 +89,35 @@ new_input = stdin.readline
 N, M = map(int, new_input().split())
 
 print(cnt_jump(*map(lambda num: int(num)-1, new_input().split())))
+
+
+
+
+# 168 ms / 33320 KB
+def cnt_jump(x1, y1, x2, y2):
+    from heapq import heappush, heappop
+
+    class_info = [list(new_input().rstrip()) for _ in range(N)]
+
+    min_heap = [(0, x1, y1)]
+    class_info[x1][y1] = ''
+
+    while True:
+        cnt, x, y = heappop(min_heap)
+        if x == x2 and y == y2:
+            return cnt
+
+        for dy, dx in (-1, 0), (0, -1), (1, 0), (0, 1):
+            ny, nx = y+dy, x+dx
+
+            if 0 <= ny < M and 0 <= nx < N and class_info[nx][ny] != '':
+                heappush(min_heap, (cnt if class_info[nx][ny] == '0' else cnt+1, nx, ny))
+                class_info[nx][ny] = ''
+
+
+from sys import stdin
+new_input = stdin.readline
+
+N, M = map(int, new_input().split())
+
+print(cnt_jump(*map(lambda num: int(num)-1, new_input().split())))
