@@ -1,5 +1,6 @@
 // 250627
 function solution(expression) {
+
     function calc(num1, num2, operator) {
         switch (operator) {
             case '+':
